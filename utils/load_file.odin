@@ -2,6 +2,7 @@ package utils
 
 import "core:fmt"
 import "core:os"
+import "core:slice"
 import "core:strings"
 
 Error :: os.Error
@@ -18,5 +19,11 @@ load_file :: proc(path: string) -> ([]string, Error) {
 		return nil, read_err
 	}
 
-	return strings.split(string(content), "\n"), nil
+	lines := strings.split(string(content), "\n")
+
+	if lines[len(lines) - 1] == "" {
+		lines = lines[:len(lines) - 1]
+	}
+
+	return lines, nil
 }
